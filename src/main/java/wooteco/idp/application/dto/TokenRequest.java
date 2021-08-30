@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 public class TokenRequest {
 
     private String code;
+    private String idToken;
     private String clientId;
+    private String clientSecret;
     private String redirectUrl;
 
 }

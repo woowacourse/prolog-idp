@@ -1,9 +1,28 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html>
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Hello World!</title>
+  <script>
+    function authorize() {
+      const githubClientId = "d1162fd7a26e2da16be2";
+      const redirectUrl = encodeURIComponent(document.location.origin + "/login/authorize");
+      const clientId = new URLSearchParams(location.search).get('client_id');
+
+      const url = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${redirectUrl}&state=${clientId}`;
+
+      window.location.href = url;
+    }
+  </script>
 </head>
 <body>
-  <h1 th:inline="text">Hello World!</h1>
+<div>
+  <a id="github-button"
+     class="btn btn-block btn-social btn-github"
+     onClick="authorize()"
+     style=" cursor: pointer; ">
+    <i class="fa fa-github"></i> Sign in with Github
+  </a>
+</div>
 </body>
 </html>

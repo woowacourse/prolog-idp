@@ -1,7 +1,6 @@
 package wooteco.idp.infrastructure;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import wooteco.idp.domain.Account;
@@ -27,6 +26,7 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + idTokenExpireLength);
         Map<String, Object> userInfoClaims = new HashMap<>();
+        userInfoClaims.put("sub", account.getId().toString());
         userInfoClaims.put("name", account.getName());
         userInfoClaims.put("nickname", account.getNickname());
         userInfoClaims.put("picture", account.getPicture());
@@ -34,7 +34,6 @@ public class JwtTokenProvider {
         userInfoClaims.put("phone-number", account.getPhoneNumber());
 
         return Jwts.builder()
-                .setSubject(account.getId().toString())
                 .setClaims(userInfoClaims)
                 .setIssuer(TOKEN_ISSUER)
                 .setIssuedAt(now)
@@ -54,18 +53,18 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, registration.getClientSecret())
                 .compact();
     }
-//
-//    public boolean validateToken(String token) {
-//        try {
-//            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-//
-//            return !claims.getBody().getExpiration().before(new Date());
-//        } catch (JwtException | IllegalArgumentException e) {
-//            return false;
-//        }
-//    }
-//
-//    public String extractSubject(String token) {
-//        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-//    }
+
+    public boolean validateToken(String idTokenSecret, String token) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(idTokenSecret).parseClaimsJws(token);
+
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public String extractSubject(String token) {
+        return Jwts.parser().setSigningKey(idTokenSecret).parseClaimsJws(token).getBody().getSubject();
+    }
 }

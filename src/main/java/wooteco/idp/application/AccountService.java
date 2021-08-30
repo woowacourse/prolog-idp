@@ -16,4 +16,12 @@ public class AccountService {
         return accountRepository.findByGithubId(githubProfile.getGithubId())
                 .orElseGet(() -> accountRepository.save(githubProfile.toAccount()));
     }
+
+    public Account findByCode(String code) {
+        return null;
+    }
+
+    public Account findById(Long id) {
+        return accountRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
 }
