@@ -37,6 +37,8 @@ public class GithubProfileResponse {
     public Account toAccount() {
         return new Account(
                 null,
+                // TODO : change into getting real username
+                getGithubId(),
                 getGithubId(),
                 getLoginName(),
                 "",

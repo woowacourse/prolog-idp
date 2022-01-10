@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,9 +14,12 @@ import wooteco.idp.application.dto.TokenRequest;
 import wooteco.idp.application.dto.TokenResponse;
 
 @Controller
-@AllArgsConstructor
 public class TokenController {
-    private TokenService tokenService;
+    private final TokenService tokenService;
+
+    public TokenController(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     @GetMapping("/login/authorize")
     public String githubCallback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String clientId) {
@@ -29,4 +33,7 @@ public class TokenController {
         return ResponseEntity.ok(tokenService.createToken(tokenRequest));
     }
 
+//    @ResponseBody
+//    @PostMapping("/login/form")
+//    public ResponseEntity<TokenResponse> generateTokenByForm(@RequestBody FormTokenRequest)
 }
