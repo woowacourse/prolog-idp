@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Hello World!</title>
+  <script>
+    function authorize() {
+      const githubClientId = "a22f54c1e57e42f4d262";
+      const redirectUrl = encodeURIComponent(document.location.origin + "/login/authorize");
+      // const clientId = new URLSearchParams(location.search).get('client_id');
+      const state = "1";
+
+      const url = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${redirectUrl}&state=${state}`;
+
+      window.location.href = url;
+    }
+  </script>
+</head>
+<body>
+<div>
+  <form name='f' action="login" method='POST' onsubmit="return validate();">
+    <br /><br />
+    <label class="col-sm-4">username</label>
+    <span class="col-sm-8"><input class="form-control" type='text' name='username' value=''/></span>
+
+    <br/><br/>
+    <label class="col-sm-4">password</label>
+    <span class="col-sm-8"><input class="form-control" type='password' name='password' /></span>
+
+    <br/><br/>
+    <input class="btn btn-primary" name="submit" type="submit"/>
+
+  </form>
+  <a id="github-button"
+     class="btn btn-block btn-social btn-github"
+     onClick="authorize()"
+     style=" cursor: pointer; ">
+    <i class="fa fa-github"></i> Sign in with Github
+  </a>
+</div>
+</body>
+</html>

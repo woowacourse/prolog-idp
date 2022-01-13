@@ -6,11 +6,13 @@ import wooteco.idp.application.dto.github.GithubProfileResponse;
 import wooteco.idp.domain.Account;
 import wooteco.idp.domain.AccountRepository;
 
-@AllArgsConstructor
 @Service
 public class AccountService {
+    private final AccountRepository accountRepository;
 
-    private AccountRepository accountRepository;
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public Account findOrCreateMember(GithubProfileResponse githubProfile) {
         return accountRepository.findByGithubId(githubProfile.getGithubId())
@@ -23,5 +25,9 @@ public class AccountService {
 
     public Account findById(Long id) {
         return accountRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    public Account findByEmail(String email) {
+        return accountRepository.findByEmail(email).orElseThrow(RuntimeException::new);
     }
 }
