@@ -8,7 +8,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import wooteco.idp.application.RegistrationService;
 import wooteco.idp.application.dto.RegistrationRequest;
 
-//@Profile({"local"})
+@Profile({"none"})
 @AllArgsConstructor
 @Configuration
 public class DataLoaderApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
