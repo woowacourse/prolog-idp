@@ -8,9 +8,9 @@
       const githubClientId = "a22f54c1e57e42f4d262";
       const redirectUrl = encodeURIComponent(document.location.origin + "/login/authorize");
       // const clientId = new URLSearchParams(location.search).get('client_id');
-      const clientId = "1";
+      const state = "1";
 
-      const url = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${redirectUrl}&state=${clientId}`;
+      const url = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${redirectUrl}&state=${state}`;
 
       window.location.href = url;
     }
