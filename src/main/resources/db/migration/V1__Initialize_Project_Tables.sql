@@ -1,12 +1,12 @@
 CREATE TABLE account (
     id BIGINT(20) NOT NULL AUTO_INCREMENT,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    github_id VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    github_id VARCHAR(255),
     github_username VARCHAR(255),
     name VARCHAR(255),
     nickname VARCHAR(255),
     picture VARCHAR(255),
-    email VARCHAR(255),
     phone_number VARCHAR(255)
 );
 
