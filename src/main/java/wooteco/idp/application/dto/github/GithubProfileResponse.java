@@ -18,6 +18,11 @@ public class GithubProfileResponse {
     @JsonProperty("avatar_url")
     private String imageUrl;
 
+    public Account toAccount() {
+        // TODO : get user information from Github
+        return null;
+    }
+
     public String getLoginName() {
         return loginName;
     }
@@ -32,21 +37,6 @@ public class GithubProfileResponse {
 
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public Account toAccount() {
-        return new Account(
-                null,
-                // TODO : change into getting real username
-                getGithubId(),
-                getGithubId(),
-                getLoginName(),
-                "",
-                getNickname(),
-                getImageUrl(),
-                "",
-                ""
-        );
     }
 
 }

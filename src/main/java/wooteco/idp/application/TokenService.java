@@ -1,6 +1,5 @@
 package wooteco.idp.application;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import wooteco.idp.application.dto.CodeResponse;
 import wooteco.idp.application.dto.TokenRequest;
