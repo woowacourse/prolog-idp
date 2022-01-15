@@ -9,11 +9,11 @@ import wooteco.idp.application.dto.AuthorizationCodeRequest;
 import wooteco.idp.application.dto.LoginRequest;
 
 @Controller
-public class TokenController {
+public class AuthorizationController {
 
     private final AccountService accountService;
 
-    public TokenController(AccountService accountService) {
+    public AuthorizationController(AccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -30,8 +30,7 @@ public class TokenController {
         String code = accountService.authenticate(loginRequest);
         return String.format(
             "redirect:%s?code=%s&state=%s",
-            authorizationCodeRequest.getRedirectUri(),
-            code,authorizationCodeRequest.getState()
+            authorizationCodeRequest.getRedirectUri(), code, authorizationCodeRequest.getState()
         );
     }
 }
