@@ -23,11 +23,6 @@ public class TokenController {
         return "login";
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
-
     @PostMapping("/authenticate")
     public String authenticate(LoginRequest loginRequest, HttpSession session) {
         AuthorizationCodeRequest authorizationCodeRequest =
