@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>login</title>
+  <link rel="stylesheet" th:href="@{/styles/login.css}">
+</head>
+<div class="form-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+        <form class="form-horizontal" action="/authenticate" method='POST'>
+          <span class="heading">Log In</span>
+          <div class="form-group">
+            <input type="email" class="form-control" id="inputEmail3" name='email' placeholder="Email">
+            <i class="fa fa-user"></i>
+          </div>
+          <div class="form-group help">
+            <input type="password" class="form-control" id="inputPassword3" name='password' placeholder="Password">
+            <i class="fa fa-lock"></i>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default">log in</button>
+          </div>
+        </form>
+        <a id="github-button"
+           class="btn btn-block btn-social btn-github"
+           onClick="authorize()"
+           style=" cursor: pointer; ">
+          <i class="fa fa-github"></i> Sign in with Github
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -8,7 +8,8 @@ public enum GithubResponses {
     서니("3", "access_token_3", "서니", "sunhpark42", "333333", "https://avatars.githubusercontent.com/u/67677561?v=4"),
     엘라("4", "access_token_4", "엘라", "HyuuunjuKim", "444444", "https://avatars.githubusercontent.com/u/43339385?v=4"),
     브라운("5", "access_token_5", "브라운", "gracefulBrown", "555555", "https://avatars.githubusercontent.com/u/46308949?v=4"),
-    현구막("6", "access_token_6", "현구막", "Hyeon9mak", "666666", "https://avatars.githubusercontent.com/u/37354145?v=4");
+    현구막("6", "access_token_6", "현구막", "Hyeon9mak", "666666", "https://avatars.githubusercontent.com/u/37354145?v=4"),
+    피케이("7", "access_token_7", "피케이", "pkeugine", "777777", "https://avatars.githubusercontent.com/u/48251668?v=4");
 
     private String code;
     private String accessToken;

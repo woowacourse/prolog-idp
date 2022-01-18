@@ -20,7 +20,7 @@ import java.util.Map;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class TokenAcceptanceTest {
+class TokenAcceptanceTest {
     @LocalServerPort
     private int port;
 

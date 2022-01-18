@@ -1,23 +1,26 @@
 server:
-  port: 4000
+  port: 8081
 
 spring:
+  datasource:
+    url: jdbc:h2:mem:prolog-idp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL;
+    driver-class-name: org.h2.Driver
+    username: sa
   jpa:
-    generate-ddl: true
-    database: h2
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true
-        use_sql_comment: true
+        use_sql_comment: false
+  h2:
+    console:
+      path: /h2
+      enabled: true
 
 github:
+  url:
+    access-token: http://localhost:8081/github/login/oauth/access_token
+    profile: http://localhost:8081/github/user
   client:
     id: github-client-id
     secret: github-client-secret
-  url:
-    access-token: http://localhost:4000/github/login/oauth/access_token
-    profile: http://localhost:4000/github/user

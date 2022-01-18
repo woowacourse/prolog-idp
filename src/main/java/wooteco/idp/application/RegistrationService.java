@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import wooteco.idp.application.dto.RegistrationRequest;
 import wooteco.idp.application.dto.RegistrationResponse;
-import wooteco.idp.application.dto.TokenRequest;
 import wooteco.idp.domain.Registration;
 import wooteco.idp.domain.RegistrationRepository;
 
