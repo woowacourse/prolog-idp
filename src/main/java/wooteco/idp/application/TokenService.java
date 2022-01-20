@@ -1,5 +1,6 @@
 package wooteco.idp.application;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import wooteco.idp.application.dto.CodeResponse;
 import wooteco.idp.application.dto.TokenRequest;
@@ -13,22 +14,14 @@ import wooteco.idp.exception.GithubApiFailException;
 import wooteco.idp.infrastructure.JwtTokenProvider;
 
 @Service
+@AllArgsConstructor
 public class TokenService {
+
     private final GithubClient githubClient;
     private final AccountService accountService;
     private final RegistrationService registrationService;
     private final CodeService codeService;
     private final JwtTokenProvider jwtTokenProvider;
-
-    public TokenService(GithubClient githubClient, AccountService accountService,
-                        RegistrationService registrationService, CodeService codeService,
-                        JwtTokenProvider jwtTokenProvider) {
-        this.githubClient = githubClient;
-        this.accountService = accountService;
-        this.registrationService = registrationService;
-        this.codeService = codeService;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
     public CodeResponse createCode(String code, String clientId) {
         GithubAccessTokenResponse githubAccessTokenResponse = githubClient.getAccessTokenFromGithub(code);

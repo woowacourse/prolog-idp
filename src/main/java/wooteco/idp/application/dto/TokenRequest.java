@@ -14,5 +14,4 @@ public class TokenRequest {
     private String clientId;
     private String clientSecret;
     private String redirectUrl;
-
 }

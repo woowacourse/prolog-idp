@@ -5,10 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wooteco.idp.domain.Registration;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class RegistrationResponse {
+
     private Long id;
     private String clientId;
     private String clientSecret;

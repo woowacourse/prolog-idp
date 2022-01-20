@@ -5,18 +5,17 @@ import org.springframework.stereotype.Service;
 import wooteco.idp.domain.Code;
 import wooteco.idp.domain.CodeRepository;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class CodeService {
 
-    private CodeRepository codeRepository;
+    private final CodeRepository codeRepository;
 
     public Code createNewCode(Long registrationId, Long accountId) {
         return codeRepository.save(new Code(registrationId, accountId));
     }
 
     public Code findByCode(String value) {
-        Code code = codeRepository.findByValue(value).orElseThrow(RuntimeException::new);
-        return code;
+        return codeRepository.findByValue(value).orElseThrow(RuntimeException::new);
     }
 }
