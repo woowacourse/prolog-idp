@@ -1,33 +1,18 @@
 package wooteco.idp.application.dto;
 
+import java.io.Serializable;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class AuthorizationCodeRequest {
+@Setter
+public class AuthorizationCodeRequest implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String responseType;
-    private String clientId;
+    private String client_id;
     private String state;
-    private String redirectUri;
+    private String redirect_uri;
     private String scope;
-
-    public void setResponseType(String responseType) {
-        this.responseType = responseType;
-    }
-
-    public void setClient_id(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public void setRedirect_uri(String redirectUri) {
-        this.redirectUri = redirectUri;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
 }

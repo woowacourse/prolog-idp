@@ -31,7 +31,7 @@ public class AuthorizationController {
         String authorizationCode = accountService.createAuthorizationCode(loginRequest);
         return String.format(
             "redirect:%s?code=%s&state=%s",
-            request.getRedirectUri(),
+            request.getRedirect_uri(),
             authorizationCode,
             request.getState()
         );
