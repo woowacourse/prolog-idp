@@ -1,5 +1,6 @@
 # authorization code
-- [ ] set expiration time to 1 minute
+- [x] set expiration time to 1 minute
+- [ ] validate redirect uri
 - [ ] authorization code is only valid for one time usage
 - [x] contains following information:
   - id 
@@ -7,3 +8,6 @@
   - redirect_uri
   - user_id (to identify user)
   - expiration_date
+- [ ] longer, more random-like value
+- [ ] exception handling
+- [ ] create test

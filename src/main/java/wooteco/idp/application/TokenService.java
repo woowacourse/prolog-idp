@@ -2,48 +2,21 @@ package wooteco.idp.application;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import wooteco.idp.application.dto.CodeResponse;
-import wooteco.idp.application.dto.LoginRequest;
 import wooteco.idp.application.dto.TokenRequest;
 import wooteco.idp.application.dto.TokenResponse;
-import wooteco.idp.application.dto.github.GithubAccessTokenResponse;
-import wooteco.idp.application.dto.github.GithubProfileResponse;
 import wooteco.idp.domain.Account;
 import wooteco.idp.domain.Code;
 import wooteco.idp.domain.Registration;
-import wooteco.idp.exception.GithubApiFailException;
 import wooteco.idp.infrastructure.JwtTokenProvider;
 
 @Service
 @AllArgsConstructor
 public class TokenService {
 
-    private final GithubClient githubClient;
     private final AccountService accountService;
     private final RegistrationService registrationService;
     private final CodeService codeService;
     private final JwtTokenProvider jwtTokenProvider;
-
-    public String createAuthorizationCode(LoginRequest loginRequest) {
-        Account account = accountService.findByEmail(loginRequest.getEmail());
-        if (account.incorrectPassword(loginRequest.getPassword())) {
-            throw new IllegalArgumentException("로그인에 실패했습니다.");
-        }
-        return jwtTokenProvider.createAuthorizationCode();
-    }
-
-    public CodeResponse createCode(String code, String clientId) {
-        GithubAccessTokenResponse githubAccessTokenResponse = githubClient.getAccessTokenFromGithub(code);
-        if (githubAccessTokenResponse.getAccessToken() == null) {
-            throw new GithubApiFailException();
-        }
-
-        GithubProfileResponse githubProfile = githubClient.getGithubProfileFromGithub(githubAccessTokenResponse.getAccessToken());
-        Account account = accountService.findOrCreateMember(githubProfile);
-        Registration registration = registrationService.findByClientId(clientId);
-
-        return CodeResponse.of(codeService.createNewCode(registration.getId(), account.getId()), registration.getRedirectUri());
-    }
 
     public TokenResponse createToken(TokenRequest tokenRequest) {
         Long accountId = extractAccountId(tokenRequest);
@@ -68,6 +41,7 @@ public class TokenService {
             return code.getAccountId();
         }
 
+        // TODO: detailed exception
         throw new RuntimeException();
     }
 }

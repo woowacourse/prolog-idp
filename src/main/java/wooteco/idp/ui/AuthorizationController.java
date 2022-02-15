@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import wooteco.idp.application.TokenService;
+import wooteco.idp.application.CodeService;
 import wooteco.idp.application.dto.AuthorizationCodeRequest;
 import wooteco.idp.application.dto.LoginRequest;
 
@@ -14,7 +14,7 @@ import wooteco.idp.application.dto.LoginRequest;
 @AllArgsConstructor
 public class AuthorizationController {
 
-    private final TokenService tokenService;
+    private final CodeService codeService;
 
     @GetMapping("/oauth/authorize")
     public String oauthAuthorize(@ModelAttribute AuthorizationCodeRequest authorizationCodeRequest, HttpSession session) {
@@ -24,14 +24,14 @@ public class AuthorizationController {
 
     @PostMapping("/authenticate")
     public String authenticate(@ModelAttribute LoginRequest loginRequest, HttpSession session) {
-        AuthorizationCodeRequest request =
+        AuthorizationCodeRequest authorizationCodeRequest =
             (AuthorizationCodeRequest) session.getAttribute("authorizationCodeRequest");
-        String authorizationCode = tokenService.createAuthorizationCode(loginRequest);
+        String authorizationCode = codeService.createAuthorizationCode(loginRequest, authorizationCodeRequest);
         return String.format(
             "redirect:%s?code=%s&state=%s",
-            request.getRedirect_uri(),
+            authorizationCodeRequest.getRedirect_uri(),
             authorizationCode,
-            request.getState()
+            authorizationCodeRequest.getState()
         );
     }
 }
