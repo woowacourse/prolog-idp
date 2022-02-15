@@ -10,6 +10,10 @@
   - expiration_date
 - [x] longer, more random-like value
 - [ ] exception handling
+  - [ ] developer error
+    - invalid info -> do not redirect. show error message directly.
+  - [ ] user denial of authorization.
+    - valide redirect_uri, valid client_id but other problem -> redirect and add query string.
 - [ ] create test
 
 # client
