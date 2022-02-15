@@ -21,7 +21,7 @@ public class CodeService {
         Account account = accountService.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
         Registration registration = registrationService.findByClientId(authorizationCodeRequest.getClient_id());
 
-        // TODO: validate redirectUri
+        registration.validateAuthorizationCodeRequest(authorizationCodeRequest);
         Code authorizationCode = createNewCode(registration.getId(), registration.getRedirectUri(), account.getId());
         return authorizationCode.getValue();
     }

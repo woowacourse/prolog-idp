@@ -3,6 +3,7 @@ package wooteco.idp.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import wooteco.idp.application.dto.AuthorizationCodeRequest;
 import wooteco.idp.application.dto.TokenRequest;
 import wooteco.idp.infrastructure.RandomGenerator;
 
@@ -43,8 +44,16 @@ public class Registration {
         this.scopes = scopes;
     }
 
+    public void validateAuthorizationCodeRequest(AuthorizationCodeRequest authorizationCodeRequest) {
+        if (!redirectUri.equals(authorizationCodeRequest.getRedirect_uri())) {
+            // TODO: custom exception
+            throw new RuntimeException();
+        }
+    }
+
     public void validate(TokenRequest tokenRequest) {
         if (!clientSecret.equals(tokenRequest.getClientSecret())) {
+            // TODO: custom exception
             throw new RuntimeException();
         }
     }

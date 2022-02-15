@@ -1,6 +1,6 @@
 # authorization code
 - [x] set expiration time to 1 minute
-- [ ] validate redirect uri
+- [x] validate redirect uri
 - [ ] authorization code is only valid for one time usage
 - [x] contains following information:
   - id 
@@ -11,3 +11,6 @@
 - [ ] longer, more random-like value
 - [ ] exception handling
 - [ ] create test
+
+# client
+- [ ] client id should be string?
