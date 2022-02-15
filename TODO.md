@@ -8,7 +8,7 @@
   - redirect_uri
   - user_id (to identify user)
   - expiration_date
-- [ ] longer, more random-like value
+- [x] longer, more random-like value
 - [ ] exception handling
 - [ ] create test
 

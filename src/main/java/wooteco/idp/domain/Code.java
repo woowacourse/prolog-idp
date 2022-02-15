@@ -32,7 +32,7 @@ public class Code {
     private LocalDateTime expireTime;
 
     public Code(Long registrationId, String redirectUri, Long accountId) {
-        this.value = RandomGenerator.generateKey(10);
+        this.value = RandomGenerator.generateKey(100);
         this.registrationId = registrationId;
         this.redirectUri = redirectUri;
         this.accountId = accountId;
