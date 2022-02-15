@@ -6,12 +6,14 @@ import wooteco.idp.application.dto.LoginRequest;
 import wooteco.idp.application.dto.github.GithubProfileResponse;
 import wooteco.idp.domain.Account;
 import wooteco.idp.domain.AccountRepository;
+import wooteco.idp.infrastructure.JwtTokenProvider;
 
 @Service
 @AllArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public Account findOrCreateMember(GithubProfileResponse githubProfile) {
         return accountRepository.findByGithubId(githubProfile.getGithubId())
@@ -26,11 +28,11 @@ public class AccountService {
         return accountRepository.findByEmail(email).orElseThrow(RuntimeException::new);
     }
 
-    public String authenticate(LoginRequest loginRequest) {
+    public String createAuthorizationCode(LoginRequest loginRequest) {
         Account account = findByEmail(loginRequest.getEmail());
         if (account.incorrectPassword(loginRequest.getPassword())) {
             throw new IllegalArgumentException("로그인에 실패했습니다.");
         }
-        return "code";
+        return jwtTokenProvider.generateAuthorizationCode();
     }
 }

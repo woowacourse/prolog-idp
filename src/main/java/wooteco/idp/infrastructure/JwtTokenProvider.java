@@ -22,6 +22,22 @@ public class JwtTokenProvider {
     @Value("${provider.access-token.expire-length}")
     private long accessTokenExpireLength;
 
+    public String generateAuthorizationCode() {
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + idTokenExpireLength);
+        Map<String, Object> authorizationClaims = new HashMap<>();
+        authorizationClaims.put("client_id", "1234");
+        authorizationClaims.put("redirect_uri", "https://localhost:8081");
+        authorizationClaims.put("account_id", "9999");
+        return Jwts.builder()
+            .setClaims(authorizationClaims)
+            .setIssuer(TOKEN_ISSUER)
+            .setIssuedAt(now)
+            .setExpiration(validity)
+            .signWith(SignatureAlgorithm.HS256, idTokenSecret)
+            .compact();
+    }
+
     public String createIdToken(Account account) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + idTokenExpireLength);

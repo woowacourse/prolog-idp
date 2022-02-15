@@ -26,12 +26,14 @@ public class AuthorizationController {
 
     @PostMapping("/authenticate")
     public String authenticate(@ModelAttribute LoginRequest loginRequest, HttpSession session) {
-        AuthorizationCodeRequest authorizationCodeRequest =
+        AuthorizationCodeRequest request =
             (AuthorizationCodeRequest) session.getAttribute("authorizationCodeRequest");
-        String code = accountService.authenticate(loginRequest);
+        String authorizationCode = accountService.createAuthorizationCode(loginRequest);
         return String.format(
             "redirect:%s?code=%s&state=%s",
-            authorizationCodeRequest.getRedirectUri(), code, authorizationCodeRequest.getState()
+            request.getRedirectUri(),
+            authorizationCode,
+            request.getState()
         );
     }
 }
