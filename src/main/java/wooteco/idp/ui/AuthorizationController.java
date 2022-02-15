@@ -1,22 +1,20 @@
 package wooteco.idp.ui;
 
 import javax.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import wooteco.idp.application.AccountService;
+import wooteco.idp.application.TokenService;
 import wooteco.idp.application.dto.AuthorizationCodeRequest;
 import wooteco.idp.application.dto.LoginRequest;
 
 @Controller
+@AllArgsConstructor
 public class AuthorizationController {
 
-    private final AccountService accountService;
-
-    public AuthorizationController(AccountService accountService) {
-        this.accountService = accountService;
-    }
+    private final TokenService tokenService;
 
     @GetMapping("/oauth/authorize")
     public String oauthAuthorize(@ModelAttribute AuthorizationCodeRequest authorizationCodeRequest, HttpSession session) {
@@ -28,7 +26,7 @@ public class AuthorizationController {
     public String authenticate(@ModelAttribute LoginRequest loginRequest, HttpSession session) {
         AuthorizationCodeRequest request =
             (AuthorizationCodeRequest) session.getAttribute("authorizationCodeRequest");
-        String authorizationCode = accountService.createAuthorizationCode(loginRequest);
+        String authorizationCode = tokenService.createAuthorizationCode(loginRequest);
         return String.format(
             "redirect:%s?code=%s&state=%s",
             request.getRedirect_uri(),

@@ -3,6 +3,7 @@ package wooteco.idp.application;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import wooteco.idp.application.dto.CodeResponse;
+import wooteco.idp.application.dto.LoginRequest;
 import wooteco.idp.application.dto.TokenRequest;
 import wooteco.idp.application.dto.TokenResponse;
 import wooteco.idp.application.dto.github.GithubAccessTokenResponse;
@@ -22,6 +23,14 @@ public class TokenService {
     private final RegistrationService registrationService;
     private final CodeService codeService;
     private final JwtTokenProvider jwtTokenProvider;
+
+    public String createAuthorizationCode(LoginRequest loginRequest) {
+        Account account = accountService.findByEmail(loginRequest.getEmail());
+        if (account.incorrectPassword(loginRequest.getPassword())) {
+            throw new IllegalArgumentException("로그인에 실패했습니다.");
+        }
+        return jwtTokenProvider.createAuthorizationCode();
+    }
 
     public CodeResponse createCode(String code, String clientId) {
         GithubAccessTokenResponse githubAccessTokenResponse = githubClient.getAccessTokenFromGithub(code);
