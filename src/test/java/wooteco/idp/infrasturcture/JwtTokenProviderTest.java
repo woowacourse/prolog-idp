@@ -8,7 +8,7 @@ import wooteco.idp.infrastructure.JwtTokenProvider;
 
 @ActiveProfiles("test")
 @SpringBootTest
-public class JwtTokenProviderTest {
+class JwtTokenProviderTest {
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
