@@ -10,17 +10,16 @@
 - [x] longer, more random-like value
 
 # separate pages
-- [ ] separate authentication process and authorizaton process
+- [x] separate authentication process and authorizaton process
 - [x] create authorization form
-- [ ] Code class constructor -> static factory method
 
-# authorization page
+# authorization page (not so important)
 - [ ] show client info
 - [ ] show what client asks for
 - [ ] create random request id for authorization form
 - [ ] validate random request id
 
-# authorization code exception
+# authorization code exception (not so important)
 - [ ] exception handling
   - [ ] developer error
     - invalid info -> do not redirect. show error message directly.
@@ -36,6 +35,9 @@
 - [ ] client id should be string?
 - [ ] authorization code is only valid for one time usage
 - [ ] change email to username
+- [ ] clean code
+  - [ ] Code class constructor -> static factory method
+  - [ ] consider LoginResponse.of()
 - [ ] create test
 
 ### decisions
