@@ -11,7 +11,7 @@
 
 # separate pages
 - [ ] separate authentication process and authorizaton process
-- [ ] create authorization form
+- [x] create authorization form
 - [ ] Code class constructor -> static factory method
 
 # authorization page
