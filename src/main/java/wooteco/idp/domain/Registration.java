@@ -1,18 +1,22 @@
 package wooteco.idp.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import wooteco.idp.application.dto.AccessTokenRequest;
 import wooteco.idp.application.dto.AuthorizationCodeRequest;
-import wooteco.idp.application.dto.TokenRequest;
 import wooteco.idp.infrastructure.RandomGenerator;
-
-import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Registration {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,8 +55,8 @@ public class Registration {
         }
     }
 
-    public void validate(TokenRequest tokenRequest) {
-        if (!clientSecret.equals(tokenRequest.getClientSecret())) {
+    public void validate(AccessTokenRequest accessTokenRequest) {
+        if (!clientSecret.equals(accessTokenRequest.getClient_secret())) {
             // TODO: custom exception
             throw new RuntimeException();
         }

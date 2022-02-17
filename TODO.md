@@ -40,10 +40,11 @@
 - [ ] use the cookie first before authorizing via username and password
 
 # access token
-- [ ] create jwt token
-- [ ] compare client secret
+- [x] create jwt token
+- [x] compare client secret
 
 - [ ] compare client redirect url
+- [ ] check grant_type
 - [ ] contains following inforamation:
   - [ ] issuer (iss), authorization server identifier
   - [x] expires_at (exp)
