@@ -9,6 +9,12 @@
 - [x] validate redirect uri
 - [x] longer, more random-like value
 
+- [ ] receive scope
+- [ ] receive state
+- [ ] validate responseType
+
+- [ ] authorization code is only valid for one time usage
+
 # separate pages
 - [x] separate authentication process and authorizaton process
 - [x] create authorization form
@@ -18,6 +24,8 @@
 - [ ] show what client asks for
 - [ ] create random request id for authorization form
 - [ ] validate random request id
+
+- [ ] add Github login in authentication page
 
 # authorization code exception (not so important)
 - [ ] exception handling
@@ -31,17 +39,53 @@
 - [ ] use the cookie to get the account info rather than session
 - [ ] use the cookie first before authorizing via username and password
 
-# next step
-- [ ] client id should be string?
-- [ ] authorization code is only valid for one time usage
+# access token
+- [ ] create jwt token
+- [ ] compare client secret
+
+- [ ] compare client redirect url
+- [ ] contains following inforamation:
+  - [ ] issuer (iss), authorization server identifier
+  - [x] expires_at (exp)
+  - [ ] audience (aud), resource server identifier
+  - [x] subject (sub), user id
+  - [ ] client id (client_id)
+  - [x] issued_at (iat)
+  - [ ] identifier of this token (jti)
+  - [ ] scope (scope), the list of OAuth scopes this token includes
+
+# token response
+- [ ] access_token
+- [ ] token type, which is "Bearer"
+- [ ] expires_in
+- [ ] include "Cache-Control: no-store" header
+
+- [ ] refresh_token
+- [ ] scope
+
+# OpenId
+- [ ] generate open id token
+
+# refresh token
+- [ ] generate refresh token
+
+# account
+- [ ] create registration page
+- [ ] organize password related TODOs
+
 - [ ] change email to username
+
+# next step
+- [ ] test with Spring Security client
+- [ ] test with non Spring Security client
+- [ ] create test
 - [ ] clean code
   - [ ] Code class constructor -> static factory method
   - [ ] consider LoginResponse.of()
-- [ ] create test
-
+ 
 ### decisions
 - authorization code is just a random string rather than jwt
   - client doesn't need the details connected to it.
   - it is only for one time use.
   - server needs to save the code in order to check one time usage. (jwt might be better if server didn't save the code)
+- `Cache-Control: no-store` header is to ensure clients do not cache access token request.
