@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Code {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

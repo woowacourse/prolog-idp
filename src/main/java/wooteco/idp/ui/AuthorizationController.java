@@ -2,12 +2,15 @@ package wooteco.idp.ui;
 
 import javax.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import wooteco.idp.application.AccountService;
 import wooteco.idp.application.CodeService;
+import wooteco.idp.application.TokenService;
+import wooteco.idp.application.dto.AccessTokenRequest;
 import wooteco.idp.application.dto.AuthorizationCodeRequest;
 import wooteco.idp.application.dto.LoginRequest;
 import wooteco.idp.application.dto.LoginResponse;
@@ -18,6 +21,7 @@ public class AuthorizationController {
 
     private final CodeService codeService;
     private final AccountService accountService;
+    private final TokenService tokenService;
 
     @GetMapping("/oauth/authorize")
     public String oauthAuthorize(@ModelAttribute AuthorizationCodeRequest authorizationCodeRequest, HttpSession session) {
@@ -47,5 +51,11 @@ public class AuthorizationController {
             authorizationCode,
             authorizationCodeRequest.getState()
         );
+    }
+
+    @PostMapping("/oauth/token")
+    public ResponseEntity<String> issueAccessToken(@ModelAttribute AccessTokenRequest accessTokenRequest) {
+        String accessToken = tokenService.createToken(accessTokenRequest);
+        return ResponseEntity.ok(accessToken);
     }
 }
