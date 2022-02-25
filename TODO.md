@@ -9,15 +9,35 @@
 - [x] validate redirect uri
 - [x] longer, more random-like value
 
-# next step
+# separate pages
+- [x] separate authentication process and authorizaton process
+- [x] create authorization form
+
+# authorization page (not so important)
+- [ ] show client info
+- [ ] show what client asks for
+- [ ] create random request id for authorization form
+- [ ] validate random request id
+
+# authorization code exception (not so important)
 - [ ] exception handling
   - [ ] developer error
     - invalid info -> do not redirect. show error message directly.
   - [ ] user denial of authorization.
     - valide redirect_uri, valid client_id but other problem -> redirect and add query string.
+
+# login (not so important)
+- [ ] give cookie with access token when authorized
+- [ ] use the cookie to get the account info rather than session
+- [ ] use the cookie first before authorizing via username and password
+
+# next step
 - [ ] client id should be string?
-- [ ] separate authentication process and authorizaton process
 - [ ] authorization code is only valid for one time usage
+- [ ] change email to username
+- [ ] clean code
+  - [ ] Code class constructor -> static factory method
+  - [ ] consider LoginResponse.of()
 - [ ] create test
 
 ### decisions

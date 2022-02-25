@@ -3,7 +3,7 @@ package wooteco.idp.application;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import wooteco.idp.application.dto.AuthorizationCodeRequest;
-import wooteco.idp.application.dto.LoginRequest;
+import wooteco.idp.application.dto.LoginResponse;
 import wooteco.idp.domain.Account;
 import wooteco.idp.domain.Code;
 import wooteco.idp.domain.CodeRepository;
@@ -17,8 +17,8 @@ public class CodeService {
     private final RegistrationService registrationService;
     private final CodeRepository codeRepository;
 
-    public String createAuthorizationCode(LoginRequest loginRequest, AuthorizationCodeRequest authorizationCodeRequest) {
-        Account account = accountService.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
+    public String createAuthorizationCode(LoginResponse loginResponse, AuthorizationCodeRequest authorizationCodeRequest) {
+        Account account = accountService.findById(loginResponse.getId());
         Registration registration = registrationService.findByClientId(authorizationCodeRequest.getClient_id());
 
         registration.validateAuthorizationCodeRequest(authorizationCodeRequest);
