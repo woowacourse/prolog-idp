@@ -14,6 +14,7 @@ CREATE TABLE code (
     id BIGINT(20) NOT NULL AUTO_INCREMENT,
     value VARCHAR(255),
     registration_id BIGINT(20),
+    redirect_uri VARCHAR(255),
     account_id BIGINT(20),
     expire_time DATETIME,
     PRIMARY KEY (id)

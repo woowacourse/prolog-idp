@@ -10,7 +10,8 @@ import wooteco.idp.application.dto.RegistrationResponse;
 @RestController
 @AllArgsConstructor
 public class RegistrationController {
-    private RegistrationService registrationService;
+
+    private final RegistrationService registrationService;
 
     @PostMapping("/registrations")
     public ResponseEntity<RegistrationResponse> create(@RequestBody RegistrationRequest registrationRequest) {
@@ -21,5 +22,4 @@ public class RegistrationController {
     public ResponseEntity<RegistrationResponse> findRegistration(@PathVariable Long id) {
         return ResponseEntity.ok(registrationService.findById(id));
     }
-
 }

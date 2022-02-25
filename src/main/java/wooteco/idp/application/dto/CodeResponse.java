@@ -9,6 +9,7 @@ import wooteco.idp.domain.Code;
 @AllArgsConstructor
 @Getter
 public class CodeResponse {
+
     private String code;
     private String redirectUri;
 
