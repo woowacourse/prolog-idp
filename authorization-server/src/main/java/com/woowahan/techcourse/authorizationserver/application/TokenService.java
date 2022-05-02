@@ -1,5 +1,7 @@
 package com.woowahan.techcourse.authorizationserver.application;
 
+import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionRequest;
+import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.woowahan.techcourse.authorizationserver.application.dto.AccessTokenRequest;
@@ -20,11 +22,17 @@ public class TokenService {
     public String createToken(AccessTokenRequest accessTokenRequest) {
         Code code = codeService.findByCode(accessTokenRequest.getCode());
         code.checkExpireTime();
+        // delete authorization code from database
 
         Account account = accountService.findById(code.getAccountId());
         Registration registration = registrationService.findByClientId(accessTokenRequest.getClient_id());
         registration.validate(accessTokenRequest);
 
         return jwtTokenProvider.createAccessToken(registration, account);
+    }
+
+    public IntrospectionResponse introspect(IntrospectionRequest introspectionRequest) {
+        boolean active = jwtTokenProvider.validateToken(introspectionRequest.getToken());
+        return new IntrospectionResponse(active);
     }
 }

@@ -19,6 +19,8 @@ public class JwtTokenProvider {
     private String idTokenSecret;
     @Value("${provider.id-token.expire-length}")
     private long idTokenExpireLength;
+    @Value("${provider.access-token.secret}")
+    private String accessTokenSecret;
     @Value("${provider.access-token.expire-length}")
     private long accessTokenExpireLength;
 
@@ -50,13 +52,13 @@ public class JwtTokenProvider {
                 .setSubject(account.getId().toString())
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, registration.getClientSecret())
+                .signWith(SignatureAlgorithm.HS256, accessTokenSecret)
                 .compact();
     }
 
-    public boolean validateToken(String idTokenSecret, String token) {
+    public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(idTokenSecret).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(accessTokenSecret).parseClaimsJws(token);
 
             return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {

@@ -1,5 +1,7 @@
 package com.woowahan.techcourse.authorizationserver.ui;
 
+import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionRequest;
+import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionResponse;
 import javax.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import com.woowahan.techcourse.authorizationserver.application.dto.AccessTokenRe
 import com.woowahan.techcourse.authorizationserver.application.dto.AuthorizationCodeRequest;
 import com.woowahan.techcourse.authorizationserver.application.dto.LoginRequest;
 import com.woowahan.techcourse.authorizationserver.application.dto.LoginResponse;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @AllArgsConstructor
@@ -57,5 +60,14 @@ public class AuthorizationController {
     public ResponseEntity<String> issueAccessToken(@ModelAttribute AccessTokenRequest accessTokenRequest) {
         String accessToken = tokenService.createToken(accessTokenRequest);
         return ResponseEntity.ok(accessToken);
+    }
+
+    @PostMapping("/oauth/token_info")
+    public ResponseEntity<IntrospectionResponse> tokenIntrospect(@RequestBody IntrospectionRequest introspectionRequest) {
+        IntrospectionResponse introspectionResponse = tokenService.introspect(introspectionRequest);
+        if (introspectionResponse.getActive()) {
+            System.out.println("checked!");
+        }
+        return ResponseEntity.ok(introspectionResponse);
     }
 }
