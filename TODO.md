@@ -55,6 +55,11 @@
   - [ ] identifier of this token (jti)
   - [ ] scope (scope), the list of OAuth scopes this token includes
 
+- [x] token introspection endpoint
+  - [x] active (true or false)
+  - [ ] details
+  - [ ] error
+
 # token response
 - [ ] access_token
 - [ ] token type, which is "Bearer"
@@ -76,6 +81,16 @@
 
 - [ ] change email to username
 
+# resource server
+- [x] verifying access token (decision: 2)
+  1. access token database
+  2. token introspection end point (needs protection)
+  3. shared secret (between authorization server and resource server)
+- [ ] decide resource categories
+  1. user info
+- [ ] verify scope
+- [ ] create error response when access token is expired
+
 # next step
 - [ ] test with Spring Security client
 - [ ] test with non Spring Security client
@@ -90,3 +105,9 @@
   - it is only for one time use.
   - server needs to save the code in order to check one time usage. (jwt might be better if server didn't save the code)
 - `Cache-Control: no-store` header is to ensure clients do not cache access token request.
+
+- authorization server used its own secret to sign access code
+- token validation : introspection endpoint
+  - there might be more resource servers in the future. So sharing secret with resource servers raises security issues.
+  - don't want to make access token database that authorization server and resource servers use at the same time. This also raises security issues while making the back-end structure more complicated.
+  - but token introspection endpoint creates extra network usage...
