@@ -16,7 +16,7 @@
 - [ ] authorization code is only valid for one time usage
 
 # separate pages
-- [x] separate authentication process and authorizaton process
+- [x] separate authentication process and authorization process
 - [x] create authorization form
 
 # authorization page (not so important)

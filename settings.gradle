@@ -1,3 +1,4 @@
 rootProject.name = 'prolog-idp'
 include 'authorization-server'
 include 'resource-server'
+include 'client-server-with-security'
