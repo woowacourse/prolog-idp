@@ -7,14 +7,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
-    private final TokenValidationInterceptor tokenValidationInterceptor;
+    private final TokenIntrospectionInterceptor tokenIntrospectionInterceptor;
 
-    public WebConfiguration(TokenValidationInterceptor tokenValidationInterceptor) {
-        this.tokenValidationInterceptor = tokenValidationInterceptor;
+    public WebConfiguration(TokenIntrospectionInterceptor tokenIntrospectionInterceptor) {
+        this.tokenIntrospectionInterceptor = tokenIntrospectionInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenValidationInterceptor);
+        registry.addInterceptor(tokenIntrospectionInterceptor);
     }
 }

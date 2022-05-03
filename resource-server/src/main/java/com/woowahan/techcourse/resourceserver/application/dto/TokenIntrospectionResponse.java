@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class ValidationResponse {
+public class TokenIntrospectionResponse {
 
     private boolean active;
 }

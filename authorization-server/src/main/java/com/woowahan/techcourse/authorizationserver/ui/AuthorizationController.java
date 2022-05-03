@@ -65,9 +65,6 @@ public class AuthorizationController {
     @PostMapping("/oauth/token_info")
     public ResponseEntity<IntrospectionResponse> tokenIntrospect(@RequestBody IntrospectionRequest introspectionRequest) {
         IntrospectionResponse introspectionResponse = tokenService.introspect(introspectionRequest);
-        if (introspectionResponse.getActive()) {
-            System.out.println("checked!");
-        }
         return ResponseEntity.ok(introspectionResponse);
     }
 }
