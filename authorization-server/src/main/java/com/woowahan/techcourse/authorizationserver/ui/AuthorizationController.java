@@ -58,7 +58,7 @@ public class AuthorizationController {
 
     @PostMapping("/oauth/token")
     public ResponseEntity<String> issueAccessToken(@ModelAttribute AccessTokenRequest accessTokenRequest) {
-        String accessToken = tokenService.createToken(accessTokenRequest);
+        String accessToken = tokenService.createAccessToken(accessTokenRequest);
         return ResponseEntity.ok(accessToken);
     }
 
