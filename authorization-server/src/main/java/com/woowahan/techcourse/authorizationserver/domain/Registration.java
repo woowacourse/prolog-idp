@@ -1,5 +1,7 @@
 package com.woowahan.techcourse.authorizationserver.domain;
 
+import com.woowahan.techcourse.authorizationserver.application.dto.AuthorizationCodeRequest;
+import com.woowahan.techcourse.authorizationserver.infrastructure.RandomGenerator;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +10,6 @@ import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.woowahan.techcourse.authorizationserver.application.dto.AccessTokenRequest;
-import com.woowahan.techcourse.authorizationserver.application.dto.AuthorizationCodeRequest;
-import com.woowahan.techcourse.authorizationserver.infrastructure.RandomGenerator;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -55,8 +54,8 @@ public class Registration {
         }
     }
 
-    public void validate(AccessTokenRequest accessTokenRequest) {
-        if (!clientSecret.equals(accessTokenRequest.getClient_secret())) {
+    public void validate(String clientSecret) {
+        if (!this.clientSecret.equals(clientSecret)) {
             // TODO: custom exception
             throw new RuntimeException();
         }
