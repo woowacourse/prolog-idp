@@ -1,14 +1,16 @@
 package com.woowahan.techcourse.authorizationserver.infrastructure;
 
-import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import com.woowahan.techcourse.authorizationserver.domain.Account;
-import com.woowahan.techcourse.authorizationserver.domain.Registration;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 public class JwtTokenProvider {
@@ -19,6 +21,8 @@ public class JwtTokenProvider {
     private String idTokenSecret;
     @Value("${provider.id-token.expire-length}")
     private long idTokenExpireLength;
+    @Value("${provider.access-token.secret}")
+    private String accessTokenSecret;
     @Value("${provider.access-token.expire-length}")
     private long accessTokenExpireLength;
 
@@ -42,7 +46,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createAccessToken(Registration registration, Account account) {
+    public String createAccessToken(Account account) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + accessTokenExpireLength);
 
@@ -50,14 +54,13 @@ public class JwtTokenProvider {
                 .setSubject(account.getId().toString())
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, registration.getClientSecret())
+                .signWith(SignatureAlgorithm.HS256, accessTokenSecret)
                 .compact();
     }
 
-    public boolean validateToken(String idTokenSecret, String token) {
+    public boolean validateAccessToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(idTokenSecret).parseClaimsJws(token);
-
+            Jws<Claims> claims = Jwts.parser().setSigningKey(accessTokenSecret).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             return false;

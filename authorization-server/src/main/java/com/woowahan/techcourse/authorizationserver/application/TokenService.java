@@ -1,5 +1,7 @@
 package com.woowahan.techcourse.authorizationserver.application;
 
+import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionRequest;
+import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.woowahan.techcourse.authorizationserver.application.dto.AccessTokenRequest;
@@ -17,14 +19,28 @@ public class TokenService {
     private final CodeService codeService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public String createToken(AccessTokenRequest accessTokenRequest) {
+    public String createAccessToken(AccessTokenRequest accessTokenRequest) {
+        Code code = findAuthorizationCode(accessTokenRequest);
+        validateClientSecret(accessTokenRequest);
+        Account account = accountService.findById(code.getAccountId());
+        return jwtTokenProvider.createAccessToken(account);
+    }
+
+    private Code findAuthorizationCode(AccessTokenRequest accessTokenRequest) {
         Code code = codeService.findByCode(accessTokenRequest.getCode());
         code.checkExpireTime();
+        // delete authorization code from database
+        return code;
+    }
 
-        Account account = accountService.findById(code.getAccountId());
+    private void validateClientSecret(AccessTokenRequest accessTokenRequest) {
         Registration registration = registrationService.findByClientId(accessTokenRequest.getClient_id());
-        registration.validate(accessTokenRequest);
+        String clientSecret = accessTokenRequest.getClient_secret();
+        registration.validate(clientSecret);
+    }
 
-        return jwtTokenProvider.createAccessToken(registration, account);
+    public IntrospectionResponse introspect(IntrospectionRequest introspectionRequest) {
+        boolean active = jwtTokenProvider.validateAccessToken(introspectionRequest.getToken());
+        return new IntrospectionResponse(active);
     }
 }
