@@ -1,9 +1,12 @@
 package com.woowahan.techcourse.authorizationserver.ui;
 
+import com.woowahan.techcourse.authorizationserver.application.dto.UserResponse;
+import com.woowahan.techcourse.authorizationserver.application.dto.AccessTokenResponse;
 import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionRequest;
 import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionResponse;
 import javax.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +30,8 @@ public class AuthorizationController {
     private final TokenService tokenService;
 
     @GetMapping("/oauth/authorize")
-    public String oauthAuthorize(@ModelAttribute AuthorizationCodeRequest authorizationCodeRequest, HttpSession session) {
+    public String oauthAuthorize(@ModelAttribute AuthorizationCodeRequest authorizationCodeRequest,
+                                 HttpSession session) {
         session.setAttribute("authorizationCodeRequest", authorizationCodeRequest);
         return "login";
     }
@@ -57,14 +61,22 @@ public class AuthorizationController {
     }
 
     @PostMapping("/oauth/token")
-    public ResponseEntity<String> issueAccessToken(@ModelAttribute AccessTokenRequest accessTokenRequest) {
-        String accessToken = tokenService.createAccessToken(accessTokenRequest);
-        return ResponseEntity.ok(accessToken);
+    public ResponseEntity<AccessTokenResponse> issueAccessToken(@ModelAttribute AccessTokenRequest accessTokenRequest) {
+        AccessTokenResponse accessTokenResponse = tokenService.createAccessToken(accessTokenRequest);
+        return ResponseEntity.ok()
+            .cacheControl(CacheControl.noStore())
+            .body(accessTokenResponse);
     }
 
     @PostMapping("/oauth/token_info")
-    public ResponseEntity<IntrospectionResponse> tokenIntrospect(@RequestBody IntrospectionRequest introspectionRequest) {
+    public ResponseEntity<IntrospectionResponse> tokenIntrospect(
+        @RequestBody IntrospectionRequest introspectionRequest) {
         IntrospectionResponse introspectionResponse = tokenService.introspect(introspectionRequest);
         return ResponseEntity.ok(introspectionResponse);
+    }
+
+    @GetMapping("/users/me")
+    public ResponseEntity<UserResponse> findUser() {
+        return ResponseEntity.ok(new UserResponse("pkeugine"));
     }
 }

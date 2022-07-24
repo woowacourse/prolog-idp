@@ -1,2 +1,29 @@
 server:
-  port: 8083
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        name: UISESSION
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          custom-client:
+            client-id: 1
+            client-secret: client-secret
+            client-name: client_name
+            scope: profile
+            provider: woowacourse
+            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+        provider:
+          woowacourse:
+            authorization-uri: http://localhost:9000/oauth/authorize
+            token-uri: http://localhost:9000/oauth/token
+            #            jwk-set-uri: http://localhost:9000/oauth/token_info
+            user-info-uri: http://localhost:9000/users/me
+            user-name-attribute: name

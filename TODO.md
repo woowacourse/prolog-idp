@@ -92,7 +92,8 @@
 - [ ] create error response when access token is expired
 
 # next step
-- [ ] test with Spring Security client
+- [x] test with Spring Security client
+- [ ] fix `authorization_request_not_found` error which happens at the very first oauth2 authorization request.
 - [ ] test with non Spring Security client
 - [ ] create test
 - [ ] clean code
@@ -104,7 +105,7 @@
   - client doesn't need the details connected to it.
   - it is only for one time use.
   - server needs to save the code in order to check one time usage. (jwt might be better if server didn't save the code)
-- `Cache-Control: no-store` header is to ensure clients do not cache access token request.
+- `Cache-Control: no-store` header is to ensure clients do not cache access token request. This has been taken care of.
 
 - authorization server used its own secret to sign access code
 - token validation : introspection endpoint

@@ -1,5 +1,6 @@
 package com.woowahan.techcourse.authorizationserver.application;
 
+import com.woowahan.techcourse.authorizationserver.application.dto.AccessTokenResponse;
 import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionRequest;
 import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionResponse;
 import lombok.AllArgsConstructor;
@@ -19,11 +20,12 @@ public class TokenService {
     private final CodeService codeService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public String createAccessToken(AccessTokenRequest accessTokenRequest) {
+    public AccessTokenResponse createAccessToken(AccessTokenRequest accessTokenRequest) {
         Code code = findAuthorizationCode(accessTokenRequest);
-        validateClientSecret(accessTokenRequest);
+//        validateClientSecret(accessTokenRequest);
         Account account = accountService.findById(code.getAccountId());
-        return jwtTokenProvider.createAccessToken(account);
+        String accessToken = jwtTokenProvider.createAccessToken(account);
+        return new AccessTokenResponse(accessToken, "Bearer");
     }
 
     private Code findAuthorizationCode(AccessTokenRequest accessTokenRequest) {
