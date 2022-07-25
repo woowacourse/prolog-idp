@@ -1,28 +1,27 @@
 package com.woowahan.techcourse.authorizationserver.application;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import com.woowahan.techcourse.authorizationserver.application.dto.AuthorizationCodeRequest;
 import com.woowahan.techcourse.authorizationserver.application.dto.LoginResponse;
 import com.woowahan.techcourse.authorizationserver.domain.Account;
 import com.woowahan.techcourse.authorizationserver.domain.Code;
 import com.woowahan.techcourse.authorizationserver.domain.CodeRepository;
-import com.woowahan.techcourse.authorizationserver.domain.Registration;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class CodeService {
 
     private final AccountService accountService;
-    private final RegistrationService registrationService;
     private final CodeRepository codeRepository;
 
     public String createAuthorizationCode(LoginResponse loginResponse, AuthorizationCodeRequest authorizationCodeRequest) {
         Account account = accountService.findById(loginResponse.getId());
-        Registration registration = registrationService.findByClientId(authorizationCodeRequest.getClient_id());
-
-        registration.validateAuthorizationCodeRequest(authorizationCodeRequest);
-        Code authorizationCode = createNewCode(registration.getId(), registration.getRedirectUri(), account.getId());
+        Code authorizationCode = createNewCode(
+            Long.valueOf(authorizationCodeRequest.getClient_id()),
+            authorizationCodeRequest.getRedirect_uri(),
+            account.getId()
+        );
         return authorizationCode.getValue();
     }
 

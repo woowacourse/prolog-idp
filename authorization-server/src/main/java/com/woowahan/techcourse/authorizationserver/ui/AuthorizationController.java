@@ -1,5 +1,6 @@
 package com.woowahan.techcourse.authorizationserver.ui;
 
+import com.woowahan.techcourse.authorizationserver.application.RegistrationService;
 import com.woowahan.techcourse.authorizationserver.application.dto.UserResponse;
 import com.woowahan.techcourse.authorizationserver.application.dto.AccessTokenResponse;
 import com.woowahan.techcourse.authorizationserver.application.dto.IntrospectionRequest;
@@ -25,13 +26,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 @AllArgsConstructor
 public class AuthorizationController {
 
-    private final CodeService codeService;
+    private final RegistrationService registrationService;
     private final AccountService accountService;
+    private final CodeService codeService;
     private final TokenService tokenService;
 
     @GetMapping("/oauth/authorize")
     public String oauthAuthorize(@ModelAttribute AuthorizationCodeRequest authorizationCodeRequest,
                                  HttpSession session) {
+        registrationService.validate(authorizationCodeRequest);
         session.setAttribute("authorizationCodeRequest", authorizationCodeRequest);
         return "login";
     }

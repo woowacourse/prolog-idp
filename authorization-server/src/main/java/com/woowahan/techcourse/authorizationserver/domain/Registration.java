@@ -48,6 +48,10 @@ public class Registration {
     }
 
     public void validateAuthorizationCodeRequest(AuthorizationCodeRequest authorizationCodeRequest) {
+        if (!clientId.equals(authorizationCodeRequest.getClient_id())) {
+            // TODO: custom exception
+            throw new RuntimeException();
+        }
         if (!redirectUri.equals(authorizationCodeRequest.getRedirect_uri())) {
             // TODO: custom exception
             throw new RuntimeException();
