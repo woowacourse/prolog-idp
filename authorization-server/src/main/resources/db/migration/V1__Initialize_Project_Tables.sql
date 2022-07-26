@@ -13,7 +13,7 @@ CREATE TABLE account (
 CREATE TABLE code (
     id BIGINT(20) NOT NULL AUTO_INCREMENT,
     value VARCHAR(255),
-    registration_id BIGINT(20),
+    registration_id VARCHAR(255),
     redirect_uri VARCHAR(255),
     account_id BIGINT(20),
     expire_time DATETIME,
@@ -33,7 +33,7 @@ CREATE TABLE registration (
 
 ALTER TABLE code
     ADD CONSTRAINT fk_code_registration
-        FOREIGN KEY (registration_id) REFERENCES registration (id);
+        FOREIGN KEY (registration_id) REFERENCES registration (client_id);
 
 ALTER TABLE code
     ADD CONSTRAINT fk_code_account

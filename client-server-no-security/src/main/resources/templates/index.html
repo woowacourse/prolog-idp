@@ -5,6 +5,33 @@
   <title>Title</title>
 </head>
 <body>
-hihi
+<div>
+  client without Spring Security
+</div>
+<div>
+  <form action="http://localhost:9000/oauth/authorize" method='GET'>
+    <div>
+      <label for="response_type">response_type (Usually this is set to 'code' which means authorization server will give client the authorization code.)</label>
+      <input name="response_type" id="response_type" value="code">
+    </div>
+    <div>
+      <label for="client_id">client_id (The id that you got when registering your client to the oauth2 application.)</label>
+      <input name="client_id" id="client_id" value="vanilla">
+    </div>
+    <div>
+      <label for="state">state (The String value you use to prevent CSRF attacks and store request-specific data. You'll receive this back when login is successful.)</label>
+      <input name="state" id="state" value="example-state">
+    </div>
+    <div>
+      <label for="redirect_uri">redirect_uri (The callback uri that you've told to the oauth2 application. If this doesn't match, login won't succeed.)</label>
+      <input name="redirect_uri" id="redirect_uri" value="http://127.0.0.1:8081/woowacourse/callback">
+    </div>
+    <div>
+      <label for="scope">redirect_uri (Range of access you want from oauth2 application. User will approve this scope in authorization process.)</label>
+      <input name="scope" id="scope" value="profile">
+    </div>
+    <button type="submit">Login with woowacourse auth</button>
+  </form>
+</div>
 </body>
 </html>

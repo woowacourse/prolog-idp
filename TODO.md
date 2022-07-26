@@ -93,7 +93,8 @@
 
 # next step
 - [x] test with Spring Security client
-- [ ] fix `authorization_request_not_found` error which happens at the very first oauth2 authorization request.
+- [x] fix `authorization_request_not_found` error which happens at the very first oauth2 authorization request.
+  - [ ] needs approval
 - [ ] test with non Spring Security client
 - [ ] create test
 - [ ] clean code

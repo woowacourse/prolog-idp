@@ -10,7 +10,7 @@ public class AuthorizationCodeRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String responseType;
+    private String response_type;
     private String client_id;
     private String state;
     private String redirect_uri;

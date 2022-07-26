@@ -21,7 +21,7 @@ public class Code {
     private String value;
 
     @Column
-    private Long registrationId;
+    private String registrationId;
 
     @Column
     private String redirectUri;
@@ -32,7 +32,7 @@ public class Code {
     @Column
     private LocalDateTime expireTime;
 
-    public Code(Long registrationId, String redirectUri, Long accountId) {
+    public Code(String registrationId, String redirectUri, Long accountId) {
         this.value = RandomGenerator.generateKey(100);
         this.registrationId = registrationId;
         this.redirectUri = redirectUri;

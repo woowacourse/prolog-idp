@@ -1,2 +1,9 @@
 server:
   port: 8081
+
+woowacourse:
+  url:
+    access-token: http://127.0.0.1:9000/oauth/token
+  client:
+    id: vanilla
+    secret: vanilla-is-the-best

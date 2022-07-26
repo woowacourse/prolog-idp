@@ -18,14 +18,14 @@ public class CodeService {
     public String createAuthorizationCode(LoginResponse loginResponse, AuthorizationCodeRequest authorizationCodeRequest) {
         Account account = accountService.findById(loginResponse.getId());
         Code authorizationCode = createNewCode(
-            Long.valueOf(authorizationCodeRequest.getClient_id()),
+            authorizationCodeRequest.getClient_id(),
             authorizationCodeRequest.getRedirect_uri(),
             account.getId()
         );
         return authorizationCode.getValue();
     }
 
-    public Code createNewCode(Long registrationId, String redirectUri, Long accountId) {
+    public Code createNewCode(String registrationId, String redirectUri, Long accountId) {
         return codeRepository.save(new Code(registrationId, redirectUri, accountId));
     }
 
